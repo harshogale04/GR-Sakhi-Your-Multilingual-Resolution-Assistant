@@ -1,17 +1,8 @@
-# MAHA-GR (महाराष्ट्र शासन निर्णय AI)
+# MAHA-GR 
 
 **Multilingual AI-Powered RAG System for Maharashtra Government Resolutions**
 
-[![AI for Bharat](https://img.shields.io/badge/AI%20for%20Bharat-Indian%20Languages-orange.svg)](https://github.com)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-009688.svg)](https://fastapi.tiangolo.com)
-[![React](https://img.shields.io/badge/React-19-61DAFB.svg)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF.svg)](https://vitejs.dev)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://python.org)
-[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-Flash%20%2B%20Embeddings-4285F4.svg)](https://deepmind.google/technologies/gemini/)
-[![Pinecone](https://img.shields.io/badge/Pinecone-768--dim%20Cosine-000000.svg)](https://www.pinecone.io)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20%2B%20Storage-3ECF8E.svg)](https://supabase.com)
-[![Tests Passing](https://img.shields.io/badge/Tests-90%2F90%20Passing-brightgreen.svg)](#6-testing--evaluation-results)
-[![Marathi Benchmark](https://img.shields.io/badge/Marathi%20Benchmark-9%2F9%20(100%25)-brightgreen.svg)](#6-testing--evaluation-results)
+
 
 ---
 
@@ -264,15 +255,15 @@ $env:PYTHONPATH = "."
 .\backend\venv\Scripts\python scripts/evaluate_marathi_rag.py
 ```
 **Result**: `9/9 passed (100.0%)` across all 6 mandatory problem domains:
-- **M1 (पात्रता अटी - Eligibility)**: ✅ PASS (Aadhaar, 7/12, e-KYC criteria verified)
-- **M2 (अंतिम मुदत - Deadlines)**: ✅ PASS (31 डिसेंबर २०२४ verified)
-- **M3 (योजना तरतुदी - Subsidies)**: ✅ PASS (८०% अनुदान verified)
-- **M4 (विभागीय जबाबदारी - Authority)**: ✅ PASS (शिक्षणाधिकारी verified)
-- **M5 (अपवाद व अटी - Exceptions)**: ✅ PASS (३ वर्ष अपात्र नियम verified)
-- **M6 (तथ्यात्मक माहिती - Caps)**: ✅ PASS (₹५ लाख मर्यादा verified)
-- **M7 (Hindi → Marathi Cross-Lingual)**: ✅ PASS (सब्सिडी DBT rates verified)
-- **M8 (English → Marathi Cross-Lingual)**: ✅ PASS (Health coverage cap verified)
-- **M9 (Insufficient Evidence)**: ✅ PASS (Safe refusal without hallucination)
+- **M1 (पात्रता अटी - Eligibility)**:  PASS (Aadhaar, 7/12, e-KYC criteria verified)
+- **M2 (अंतिम मुदत - Deadlines)**:  PASS (31 डिसेंबर २०२४ verified)
+- **M3 (योजना तरतुदी - Subsidies)**:  PASS (८०% अनुदान verified)
+- **M4 (विभागीय जबाबदारी - Authority)**:  PASS (शिक्षणाधिकारी verified)
+- **M5 (अपवाद व अटी - Exceptions)**:  PASS (३ वर्ष अपात्र नियम verified)
+- **M6 (तथ्यात्मक माहिती - Caps)**:  PASS (₹५ लाख मर्यादा verified)
+- **M7 (Hindi → Marathi Cross-Lingual)**:  PASS (सब्सिडी DBT rates verified)
+- **M8 (English → Marathi Cross-Lingual)**:  PASS (Health coverage cap verified)
+- **M9 (Insufficient Evidence)**:  PASS (Safe refusal without hallucination)
 
 *For comprehensive benchmark logs and methodology, see [`docs/EVALUATION.md`](docs/EVALUATION.md).*
 
@@ -308,11 +299,3 @@ npm run build
 - [`docs/EVALUATION.md`](docs/EVALUATION.md): Quality benchmark across the 6 mandatory Maharashtra GR domains, cross-lingual queries, and hallucination guardrails.
 
 ---
-
-## 9. Known Limitations & Prototype vs. Production Notes
-
-1. **Offline Mock Embeddings vs Live Gemini**: In Demo Mode, a 768-dimensional hash-projection vector is used. It guarantees document-level recall and key-term faithfulness, but page-level routing differs from live Gemini semantics. Supplying `GEMINI_API_KEY` activates live semantic retrieval.
-2. **Local Tesseract Requirements**: Tier-2 OCR requires Tesseract with `mar+hin+eng` language packs installed locally. If missing, the system falls back to Gemini Multimodal vision extraction.
-3. **In-Process Background Tasks**: Document ingestion runs on FastAPI `BackgroundTasks`. On free-tier cloud containers (e.g. Render free tier), sleep cycles may terminate long-running OCR tasks. Production deployments should use a Celery/Redis queue.
-4. **Pinecone Vector Deletion**: Certain free-tier Pinecone plans restrict metadata filter deletion. MAHA-GR solves this by querying the Supabase `chunks` table and prioritizing explicit vector ID deletion.
-5. **Deployment Status**: The codebase is fully verified locally (90/90 tests passing, 9/9 benchmark passing, production build clean). Live deployment requires your team's cloud account provisioning.
