@@ -9,6 +9,8 @@ __pycache__/
 .env
 .env.local
 .env.*.local
+backend/.env
+frontend/.env
 venv/
 .venv/
 env/
